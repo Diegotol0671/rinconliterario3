@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+<!--Aqui saco las estrellas de la libreria semantic, de los scripts especificamente-->
+<div class="container">
+    {% if form.errors %}
+    <div class="alert alert-danger">
+        <strong>¡Hubo un error en el formulario!</strong>
+        Por favor, completa todos los campos requeridos.
+    </div>
+{% endif %}
+    <center>
+        <h1>Editar Comentario</h1>
+        
+        <div class="container my-4">
+            <!-- sección de mensajes -->
+            {% if messages %}
+                <div class="container mt-3">
+                    {% for message in messages %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        
+        <form action="" method="POST">
+            {% csrf_token %}
+          
+            <div class="card mx-auto my-5" style="max-width: 40rem;">
+                <div class="card-body">
+                    <br>
+                    <div class="form-group">
+                        <label>Comentario</label>
+                        <br><br>
+                        <textarea class="form-control" name="descripcion" id="exampleFormControlTextarea1" rows="8"></textarea>
+                        {% if form.descripcion.errors %}
+                            <div class="alert alert-danger">
+                                {{ form.descripcion.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                  
+                </div>
+            </div>
+            
+            <br>
+            <br>
+
+            <span class="badge badge-info" style="background-color: #0d6efd;">
+                <h4>Calificacion</h4>
+              </span>
+              <br><BR>
+            <div class="ui star rating" data-rating="0" data-max-rating="5"></div>
+           <br>
+            
+              <br>
+            <center>
+            
+            <input type="hidden" id="calificacion" name="calificacion">
+        </center>
+            <button class="btn btn-success" type="submit">Guardar Comentario</button>
+            {% if id_libro %}
+            <a class="btn btn-danger" href="{% url 'comentarios' id_libro %}">Cancelar</a>
+        {% endif %}
+
+            
+        </div>
+        </form>
+    </center>
+</div>   
+<script>
+    $(document).ready(function() {
+        $('.ui.rating')
+          .rating()
+          .rating('setting', 'onRate', function(value) {
+              // Aquí es donde actualizas el valor del campo oculto
+              $('#calificacion').val(value);
+          });
+    });
+</script>  
+{% endblock %}

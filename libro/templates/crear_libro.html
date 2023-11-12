@@ -1,0 +1,66 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}">
+
+  <center><h1>Agregar Libro</h1>
+    <div class="container my-4">      
+      {% if messages %}
+          <div class="container mt-3">
+              {% for message in messages %}
+              <div class="alert alert-danger" role="alert">
+                  {{ message }}
+              </div>
+              {% endfor %}
+          </div>
+      {% endif %}
+    </div>  
+  </center>
+  
+
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="card mx-auto my-5" style="max-width: 40rem;">
+        <div class="card-body">
+          <div class="form-row">
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label">Titulo</label>
+              <div class="col-sm-10">
+                <input class="form-control" name="titulo" placeholder="Ingrese un titulo por favor">
+              </div>
+            </div>
+          </div>
+          <br>
+          <div>
+            <label for="formFileLg" class="form-label">Imagen</label>
+            <input class="form-control form-control-lg" id="formFileLg" type="file" name="imagen">
+          </div>
+            <br>
+            <div class="form-group">
+              <label>Descripcion</label>
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="8" name="descripcion"></textarea>
+            </div>
+            <br>
+            <center>
+            <button class="btn btn-success" type="submit"  href="">Guardar Libro</button>
+            <a class="btn btn-danger" href="{% url 'libros' %}">Cancelar</a>
+            </center>
+        </div>
+      </div>
+    </form> 
+  <style>
+
+  #descripcion {
+    max-width: 100%;
+  }
+  .container {
+    overflow: auto;
+  }
+
+  #descripcion {
+    font-size: 14px;
+  }
+
+  </style>
+{% endblock %}

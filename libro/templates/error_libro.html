@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block content %}
+    
+
+<div class="image-container">
+    <center>
+        <h2>Usted no tiene permisos para acceder a esta pagina </h2>
+        <img class="activator img-fluid" src="{% static 'imagenes/error.png' %}"/>
+    </center>
+
+</div>
+
+{% endblock %}

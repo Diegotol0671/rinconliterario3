@@ -1,0 +1,26 @@
+
+{% extends 'base.html' %}
+{% block content %}
+  <div class="container my-4">
+    <center>
+      <h1>Eliminar Libro</h1>
+    </center>
+   
+      <form method="post">
+        {% csrf_token %}
+        <div class="card w-50 mx-auto my-5">
+          <div class="card-body">
+            <center>
+              <h2 class="card-title">Proceso de eliminación irreversible</h2>
+              <br>
+              <h5>Estas seguro que deseas eliminar este libro??</h5>                                  
+                <br>
+                <button type="submit" class="btn btn-danger">Eliminar</button>
+                <a class="btn btn-secondary mt-auto" href="{% url 'libros' %}">Cancelar</a>         
+            </center>
+          </div>
+        </div>
+      </form>
+  </div>
+
+{% endblock %}

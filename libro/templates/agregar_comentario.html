@@ -1,0 +1,61 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+    <!--De estos scripts salen las estrellas-->
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap/css/miestilo.css' %}">
+      
+    <div class= "container my-4"> 
+        <center>
+            <h1>Agregar Comentario</h1>
+            {{error}}           
+            <form method="POST">
+                {% csrf_token %}
+                <div class="card mx-auto my-5" style="max-width: 40rem;">
+                    <div class="card-body">
+                        <br>
+                        <div class="form-group">
+                            <label>Comentario</label>
+                            <br><br>
+                            <textarea class="form-control" name="descripcion" id="exampleFormControlTextarea1" rows="8"></textarea>
+                        </div>
+                       
+                    </div>
+                </div>
+                <br>
+                <br>
+
+                <span class="badge badge-info" style="background-color: #0d6efd;">
+                    <h4>Calificacion</h4>
+                </span>
+                <br><BR>
+                <div class="ui star rating" data-rating="0" data-max-rating="5"></div>
+                <br>
+                <br>
+                <center>
+                    <input type="hidden" id="calificacion" name="calificacion">
+                </center>
+                <button class="btn btn-success" type="submit">Guardar Comentario</button>
+                <a class="btn btn-danger" href="{% url 'inicio' %}">Cancelar</a>
+            </form>
+        </center>
+    </div>
+        
+    <script>
+        $(document).ready(function() {
+            $('.ui.rating')
+              .rating()
+                 .rating('setting', 'onRate', function(value) {
+             
+            
+                  $('#calificacion').val(value);
+              });
+        });
+        function showConfirmation() {
+           alert("El comentario se guardó correctamente");
+        }
+    </script>     
+{% endblock %}

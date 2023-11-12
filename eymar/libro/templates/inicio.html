@@ -1,0 +1,82 @@
+{% include 'nav_inicio.html' %}
+
+{% block content %}
+
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link rel="stylesheet" href="/static/bootstrap/css/css.css">
+  <title>El Rincon Literario</title>
+
+  <nav class="navbar navbar-expand-lg navbar-dark blue lighten-2 mb-4">
+    <form class="form-inline md-form mr-auto mb-4" method="GET" action="{% url 'inicio' %}">
+      <div class="input-group">
+      <input class="form-control rounded" type="search" placeholder="Buscar" aria-label="Buscar" name="q" value="{{ query }}">
+      <button class="btn btn-outline-success" type="submit">Buscar</button>
+      </div>
+    </form>
+  </nav>
+  
+
+  {% if libros %}
+  {% else %}
+    <center>
+      <span class="badge badge-danger">
+        <h2 class="text-dark">No se encontraron libros para "{{ query }}"</h2>
+      </span>
+      <br><br>
+    </center>
+  {% endif %}
+
+
+  {% if not query %}
+    <center>
+      <img src="/static/imagenes/baner.png" height="500" width="1300"><br><br>
+      <span class="badge badge-sucess" style="background-color: #cc1ca6;">
+        <h2 class="text-white">Catologo de libros</h2>
+      </span><br>
+    </center>
+  {% endif %}
+ 
+
+
+  <div class= "container my-4"> 
+    {% for libro in libros %}
+      <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="col">
+          <div class="card h-100">
+            <center>
+            <a href="{% url 'comentarios'  id_libro=libro.id %}">
+             <img class="activator img-fluid custom-size" src="{{ libro.imagen.url }}" alt="Imagen"></center> 
+            </a>
+            <center>
+              <a href="{% url 'comentarios' id_libro=libro.id %}" class="card-link">{{ libro.titulo }}</a>
+            </center>
+          </div>  
+        </div>
+      </div>  
+    {% endfor %}
+  </div>
+
+  
+
+  <style>
+    .custom-size {
+      width: 400px;
+     height: 200px;
+    }
+    form {
+      margin: auto;
+    }
+    form > div {
+      background:#fff;
+      padding: 9px 22px 9px 26px;
+      border-radius: 30px;
+      border:2px solid #cad3dc;
+      box-shadow: rgba(255, 255, 255, 0.5) -8px -8px 15px,
+        rgba(0, 0, 0, 0.1) 10px 10px 10px,
+        rgba(255, 255, 255, 0.5) -8px -8px 15px inset,
+        rgba(0, 0, 0, 0.1) 10px 10px 10px inset;
+    }
+  </style>
+{% endblock %}

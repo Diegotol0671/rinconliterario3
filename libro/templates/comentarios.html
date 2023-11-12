@@ -1,0 +1,79 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/rating.min.js"></script>
+  <!--De estos scripts salen las estrellas-->
+  
+  <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}">
+  <link rel="stylesheet" href="{% static 'bootstrap/css/miestilo.css' %}">
+  <!--Este es el diseño del sistema-->
+  
+  <div class="container">  
+    <a class="btn btn-primary" href="{% url 'agregar_comentario' libro.id %}">Añadir comentario</a>
+  </div>
+  <br>
+
+  <center>
+    <div class="container my-4">
+      {% if messages %}
+          <div class="container mt-3">
+              {% for message in messages %}
+              <div class="alert alert-success" role="alert">
+                  {{ message }}
+              </div>
+              {% endfor %}
+          </div>
+      {% endif %}
+    </div>  
+    <div class="col-md-10">  
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-body">                  
+            <h5 class="card-title"></h5>
+            <h1 class="card-text">{{ libro.titulo }}</h1>
+            <p class="card-text">{{ libro.descripcion }}</p>                             
+            <img class="activator img-fluid" src="{{ libro.imagen.url }}" alt="Imagen"  width="280">                                                         
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+    <span class="badge badge-info" style="background-color: #0d6efd;">
+      <h2>Comentarios</h2>
+    </span>
+    <br><br>
+  </center>
+  {% for comentario in comentarios %}
+  
+   <div class= "container my-4"> 
+    <div class="ui card" style="width: 100%;">
+      <div class="content">
+        <div class="header">{{comentario.usuario.username}}</div>
+          <div class="description">
+            <p>{{comentario.descripcion}}</p>
+          </div>
+        <div class="meta">{{comentario.fecha}}</div>
+        <div class="ui star rating" data-rating="{{comentario.calificacion}}" data-max-rating="5"></div>
+        <br>
+        {% if request.user == comentario.usuario %}
+        <br>
+        <a class="btn btn-warning" href="{% url 'editarcomentarios' comentario.id %}">Editar</a>
+        <a class="btn btn-danger" href="{% url 'eliminar_comentario' id=comentario.id %}">Borrar</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+
+   </div>
+  
+    <script>
+      $(document).ready(function () {
+        $('.ui.rating').rating('disable');
+      });
+    </script>
+  
+  {% endfor %}
+{% endblock %}

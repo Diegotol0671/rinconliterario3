@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+    <center>
+        <h1>Agregar libros</h1>
+        <br>
+        <div class="card-header">
+            <a class="btn btn-primary" href="{% url 'crear_libro' %}" >Agregar Nuevo Libro</a>
+        </div>
+        <br>
+    
+        <div class="container my-4">
+    
+            <!-- sección de mensajes -->
+            
+            {% if messages %}
+                <div class="container mt-3">
+                    {% for message in messages %}
+                    <div class="alert alert-success" role="alert">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </center>  
+        <table class="ui celled padded table">
+            <thead>
+                <tr>
+                    <th class="single line">ID</th>
+                    <th>TITULO</th>
+                    <th>PORTADA</th>
+                    <th>DESCRIPCION</th>
+                    <th>ACCIONES</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for libro in libros %}
+                    <tr>
+                        <td>
+                            <h2 class="ui center aligned header">{{ libro.id }}</h2>
+                        </td>
+                        <td class="single line">{{ libro.titulo }}</td>
+                        <td>
+                            <center><img src="{{ libro.imagen.url }}" height="75"></center>
+                        </td>
+                        <td class="">{{ libro.descripcion }} </td>
+                        <td>
+                            <a class="ui blue button" href="{% url 'editar_libro' libro.id %}" role="button">Editar</a>
+                            <a class="ui red button" href="{% url 'eliminar_libro' libro.id %}" role="button">Borrar</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+
+
+
+{% endblock %}

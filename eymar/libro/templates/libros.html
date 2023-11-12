@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <nav class="navbar navbar-expand-lg navbar-dark blue lighten-2 mb-4">
+        <form class="form-inline md-form mr-auto mb-4" method="GET" action="{% url 'libros' %}">
+          <div class="input-group">
+          <input class="form-control rounded" type="search" placeholder="Buscar" aria-label="Buscar" name="q" value="{{ query }}">
+          <button class="btn btn-outline-success" type="submit">Buscar</button>
+          </div>
+        </form>
+    </nav>
+
+    {% if libros %} 
+        <center>
+            <h1>Agregar libros</h1>
+            <br>
+            <div class="card-header">
+                <a class="btn btn-primary" href="{% url 'crear_libro' %}" >Agregar Nuevo Libro</a>
+            </div>
+            <br>
+            <div class="container my-4">
+                {% if messages %}
+                    <div class="container mt-3">
+                        {% for message in messages %}
+                        <div class="alert alert-success" role="alert">
+                            {{ message }}
+                    </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </center>  
+        <table class="ui celled padded table">
+            <thead>
+                 <tr>
+                    <th class="single line">ID</th>
+                       <th>TITULO</th>
+                    <th>PORTADA</th>
+                    <th>DESCRIPCION</th>
+                    <th>ACCIONES</th>
+                 </tr>
+               </thead>
+            <tbody>
+                {% for libro in libros %}
+                    <tr>
+                        <td>
+                            <h2 class="ui center aligned header">{{ libro.id }}</h2>
+                        </td>
+                           <td class="single line">{{ libro.titulo }}</td>
+                        <td>
+                               <center><img class="custom-size" src="{{ libro.imagen.url }}" height="75"></center>
+                        </td>
+                        <td class="">{{ libro.descripcion }} </td>
+                        <td>
+                            <a class="ui blue button" href="{% url 'editar_libro' libro.id %}" role="button">Editar</a>
+                            <a class="ui red button" href="{% url 'eliminar_libro' libro.id %}" role="button">Borrar</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <center>
+            <span class="badge badge-danger">
+                <h2 class="text-dark">No se encontraron libros para "{{ query }}"</h2>
+            </span>
+            <br><br>
+        </center>
+    {% endif %}
+    <style>
+        .custom-size {
+          width: 400px;
+         height: 200px;
+        }
+        form {
+          margin: auto;
+        }
+        form > div {
+          background:#fff;
+          padding: 9px 22px 9px 26px;
+          border-radius: 30px;
+          border:2px solid #cad3dc;
+          box-shadow: rgba(255, 255, 255, 0.5) -8px -8px 15px,
+            rgba(0, 0, 0, 0.1) 10px 10px 10px,
+            rgba(255, 255, 255, 0.5) -8px -8px 15px inset,
+            rgba(0, 0, 0, 0.1) 10px 10px 10px inset;
+        }
+    </style>
+
+{% endblock %}
